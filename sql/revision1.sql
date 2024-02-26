@@ -1,0 +1,21 @@
+-- Active: 1708882734991@@127.0.0.1@5432@udo_postgres
+CREATE TABLE lists (
+    id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+    name VARCHAR(256) NOT NULL,
+    boardId UUID REFERENCES boards(id) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+CREATE TABLE cards(
+    id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+    title VARCHAR(256) NOT NULL,
+    description VARCHAR(256) NOT NULL,
+    due_date DATE NOT NULL,
+    list_id UUID REFERENCES lists(id) ON DELETE CASCADE ON UPDATE CASCADE
+)
+
+CREATE TABLE cards_users (
+    id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
+    isOwner BOOLEAN DEFAULT false,
+    cardId UUID REFERENCES cards(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    userId UUID REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+)

@@ -1,3 +1,4 @@
+-- Active: 1708882734991@@127.0.0.1@5432@udo_postgres
 CREATE TABLE boards (
     id UUID NOT NULL DEFAULT gen_random_uuid() PRIMARY KEY,
     name VARCHAR(256) NOT NULL
