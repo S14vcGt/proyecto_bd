@@ -105,9 +105,9 @@ app.post("/boards/lists", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/boards/lists", async (req: Request, res: Response) => {
+app.get("/boards/lists/:boardId", async (req: Request, res: Response) => {
   try {
-    const value = [req.body.boardId];
+    const value = [req.params.boardId];
     const text = "SELECT id, name FROM lists WHERE boardId = $1";
     const result = await pool.query(text, value);
     res.status(200).json(result.rows);
@@ -164,9 +164,9 @@ app.post("/boards/lists/cards/members", async (req: Request, res: Response) => {
   }
 });
 
-app.get("/boards/lists/cards", async (req: Request, res: Response) => {
+app.get("/boards/lists/cards/:listId", async (req: Request, res: Response) => {
   try {
-    const value = [req.body.listId];
+    const value = [req.params.listId];
     const text =
       'SELECT c.id, c.title, c.description, c.due_date, u.name "ownerUsername" FROM cards c JOIN cards_users cu ON c.id = cu.cardId JOIN users u ON cu.userId = u.id WHERE c.list_id = $1 AND cu.isOwner = true';
     const result = await pool.query(text, value);
